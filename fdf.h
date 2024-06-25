@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 12:39:13 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/15 19:17:05 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/06/25 12:36:37 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/06/25 15:14:04 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <math.h>
 #include <stdbool.h>
-#include "..//MLX42/include/MLX42/MLX42.h"
+#include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
 #include "../get_next_line/get_next_line.h"
 
@@ -28,6 +28,12 @@ typedef struct s_data
     int width;
     int height;
     int **z_matrix;
+    float x;
+    float y;
+    float z;
+    int is_last;
+    int win_x;
+    int win_y;
 
     void *mlx_ptr;
     void *win_ptr;
@@ -36,7 +42,12 @@ typedef struct s_data
     mlx_image_t *image;
 } fdf;
 
-void bresenham(float x, float y, float x1, float y1, fdf *data);
+
+void	error(fdf *data);
+void	free_data(fdf *data);
+int	count_lines(char **argv);
+int	get_map(fdf *data, char **argv);
+//void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color);
 
 
-#endif
+# endif
