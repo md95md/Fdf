@@ -1,49 +1,80 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 12:38:18 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/25 15:03:55 by agaleeva         ###   ########.fr       */
+/*   Created: S24/06/25 12:38:18 by agaleeva          #+#    #+#             */
+/*   Updated: S24/07/02 14:55:42 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#define S 40
 
-void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color)
+int	ft_max(int a, int b)
 {
-    int dx = abs(x1 - x0);
-    int dy = -abs(y1 - y0);
-    int sx;
-    int sy;
-    int err = dx + dy;
-    int e2;
+	if (a > b)
+		return (a);
+	return (b);
+}
 
-    if (x0 < x1) 
-        sx = 1;
-    else
-        sx = -1;
-    if (y0 < y1)
-        sy = 1;
-    else
-        sy = -1;
-    while (1)
-    {
-        mlx_put_pixel(img, x0, y0, color);
-        if (x0 == x1 && y0 == y1)
-            break;
-        e2 = 2 * err;
-        if (e2 >= dy)
-        {
-            err += dy;
-            x0 += sx;
-        }
-        if (e2 <= dx)
-        {
-            err += dx;
-            y0 += sy;
-        }
-    }
+int	ft_mod(int a)
+{
+	if (a < 0)
+		return (-a);
+	return (a);
+}
+
+void	draw_line(float x, float y, float x1, float y1, t_map *map)
+{
+	float	x_step;
+	float	y_step;
+	int		max;
+	int		z;
+	int		z1;
+
+	z = map->matrix[(int)y / S][(int)x/ S];
+	z1 = map->matrix[(int)y1 / S][(int)x1 / S];
+	if (z > 0 || z1 > 0)
+		map->color = 0xFF0000FF;
+	else if (z == 0 || z1 == 0)
+		map->color = 0x0000FFFF;
+	else if (z < 0 || z1 < 0)
+		map->color = 0x00FF00FF;
+	// isometric(&x, &y, z);
+	// isometric(&x1, &y1, z1);
+	x_step = x1 - x;
+	y_step = y1 - y;
+	max = ft_max(ft_mod((int)x_step), ft_mod((int)y_step));
+	x_step /= max;
+	y_step /= max;
+	while ((int)(x - x1) || (int)(y - y1))
+	{
+		mlx_put_pixel(map->mlx, x, y, map->color);
+		x += x_step;
+		y += y_step;
+	}
+}
+
+void	draw_map_array(mlx_image_t *img, t_map *map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			if (x < map->width - 1)
+				draw_line(x * S, y * S, (x + 1) * S, y * S, map);
+			if (y < map->height - 1)
+				draw_line(x * S, y * S, x * S, (y + 1) * S, map);
+			x++;
+		}
+		y++;
+	}
 }

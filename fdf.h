@@ -5,49 +5,83 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 12:36:37 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/25 15:14:04 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/07/02 16:06:24 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+# define EXIT_FAILURE 1
 
-# include <fcntl.h>
-# include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <math.h>
-#include <stdbool.h>
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../libft/libft.h"
-#include "../get_next_line/get_next_line.h"
+# include <stdio.h>
+# include "../libft/libft.h"
+# include "../get_next_line/get_next_line.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 
-typedef struct s_data
+typedef struct s_point
 {
-    int width;
-    int height;
-    int **z_matrix;
-    float x;
-    float y;
-    float z;
-    int is_last;
-    int win_x;
-    int win_y;
+	int	x;
+	int	y;
+	int	z;
+}	t_point;
 
-    void *mlx_ptr;
-    void *win_ptr;
-    char **map;
-    mlx_t *mlx;
-    mlx_image_t *image;
-} fdf;
+typedef struct s_param
+{
+	float	scale;
+	float	z_scale;
+	int		is_isometric;
+	float	angle;
+	float	shift_x;
+	float	shift_y;
+}	t_param;
 
+typedef struct s_map
+{
+	int			**matrix;
+	t_point		*points;
+	int			height;
+	int			width;
+	void		*mlx;
+	void		*win;
+	uint32_t	color;
+}	t_map;
 
-void	error(fdf *data);
-void	free_data(fdf *data);
-int	count_lines(char **argv);
-int	get_map(fdf *data, char **argv);
-//void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color);
+void	draw_line(float x, float y, float x1, float y1, t_map *map);
+//void	draw_line(t_point *p0, float x1, float y1, t_map *map);
+void	draw_map_array(mlx_image_t *img, t_map *map);
+int		get_height(char **argv);
+int		get_width(char **argv);
+void	read_map(t_map *map, char **argv);
+void	draw_dots(mlx_image_t *img, t_map *matrix, uint32_t color);
+void	get_map(t_map *map, char **argv);
+void	draw_map_array(mlx_image_t *img, t_map *map);
+void	isometric(float *x, float *y, int z);
+//void	isometric(t_point *dot, float angle);
+void	free_error_points(t_map *map);
+void	fill_matrix(int *z_line, char *line);
+void	free_error_points(t_map *map);
 
+// typedef struct s_dline
+// {
+// 	int	dx;
+// 	int	dy;
+// 	int	sx;
+// 	int	sy;
+// 	int	err;
+// 	int	e2;
+// }	t_dline;
 
-# endif
+// typedef struct s_dpoints
+// {
+// 	int	x0;
+// 	int	y0;
+// 	int	x1;
+// 	int	y1;
+// }	t_dpoints;
+
+//void	isometric(float *x, float *y, int z);
+
+#endif

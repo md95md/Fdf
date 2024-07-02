@@ -5,49 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 13:16:23 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/25 15:18:50 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/07/02 15:24:41 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_data(fdf *data);
-void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color);
-void draw_points(mlx_image_t *img, fdf *data);
-int parse_map(fdf *data);
-//void draw_map_on_image(mlx_t *mlx, mlx_image_t *img, char **argv);
-
-int main(int argc, char **argv)
+void	draw_background(mlx_image_t *img)
 {
-    fdf *data;
-	mlx_t *mlx;
-	int scale = 20;
-	
-	
-	if (argc != 2)
-	{
-		printf("Error\n");
-		exit(1);
-	}
-	mlx = mlx_init(1080, 1080, "Test", true);
-	if (!mlx)
-        exit(1);
+	int	x;
+	int	y;
 
-	mlx_image_t* img = mlx_new_image(mlx, 1080, 1080);
-	if (!img)
-		exit(1);
-	data = malloc(sizeof(fdf));
-	draw_line(img, 0, 0, 1080, 1080, 0xFFFFFFFF);
-	mlx_image_to_window(mlx, img, 0, 0);
-	//draw_points(img, data);
-	mlx_loop(mlx);
-	mlx_delete_image(mlx, img);
-	mlx_terminate(mlx);
-	//free_data(data);
-	return 0; 
+	y = 0;
+	while (y < 2160)
+	{
+		x = 0;
+		while (x < 3840)
+		{
+			mlx_put_pixel(img, x, y, 0x000000FF);
+			x++;
+		}
+		y++;
+	}
 }
 
-// gcc main.c ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c -I../get_next_line -I../libft -I../MLX42/include -L../MLX42/build -lmlx42 -ldl -lglfw -lX11 -lm -L../libft -lft -o program
+int	main(int argc, char **argv)
+{
+	t_map			*map;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
 
-// gcc main.c ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c draw_line.c draw_map.c -I../get_next_line -I../libft -I../MLX42/include -L../MLX42/build -lmlx42 -ldl -lglfw -lX11 -lm -L../libft -lft -o program
+	if (argc != 2)
+		exit(1);
+	mlx = mlx_init(3840, 2160, "Test", true);
+	if (!mlx)
+		exit(1);
+	img = mlx_new_image(mlx, 3840, 2160);
+	if (!img)
+	{
+		mlx_terminate(mlx);
+		exit(1);
+	}
+	draw_background(img);
+	mlx_image_to_window(mlx, img, 0, 0);
+	map = (t_map *)malloc(sizeof(t_map));
+	if (!map)
+	{
+		mlx_delete_image(mlx, img);
+		mlx_terminate(mlx);
+		exit(1);
+	}
+	read_map(map, argv);
+	map->mlx = img;
+	draw_map_array(img, map);
+	mlx_loop(mlx);
+	free_error_points(map);
+	mlx_delete_image(mlx, img);
+	mlx_terminate(mlx);
+	return (0);
+}
