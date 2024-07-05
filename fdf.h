@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/02 16:06:24 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:30:50 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
-	int	z;
+	float	x;
+	float	y;
+	float	z;
 }	t_point;
 
 typedef struct s_param
@@ -40,48 +40,31 @@ typedef struct s_param
 
 typedef struct s_map
 {
-	int			**matrix;
+	t_point		**matrix;
 	t_point		*points;
 	int			height;
 	int			width;
 	void		*mlx;
 	void		*win;
 	uint32_t	color;
+	t_param		param;
 }	t_map;
 
-void	draw_line(float x, float y, float x1, float y1, t_map *map);
-//void	draw_line(t_point *p0, float x1, float y1, t_map *map);
-void	draw_map_array(mlx_image_t *img, t_map *map);
+void	draw_line(t_point p0, t_point p1, t_map *map);
 int		get_height(char **argv);
 int		get_width(char **argv);
 void	read_map(t_map *map, char **argv);
 void	draw_dots(mlx_image_t *img, t_map *matrix, uint32_t color);
 void	get_map(t_map *map, char **argv);
 void	draw_map_array(mlx_image_t *img, t_map *map);
-void	isometric(float *x, float *y, int z);
-//void	isometric(t_point *dot, float angle);
+void	isometric_projection(t_point *point);
 void	free_error_points(t_map *map);
-void	fill_matrix(int *z_line, char *line);
+void	fill_matrix(t_point *points, char *line, int y, t_map *map);
 void	free_error_points(t_map *map);
-
-// typedef struct s_dline
-// {
-// 	int	dx;
-// 	int	dy;
-// 	int	sx;
-// 	int	sy;
-// 	int	err;
-// 	int	e2;
-// }	t_dline;
-
-// typedef struct s_dpoints
-// {
-// 	int	x0;
-// 	int	y0;
-// 	int	x1;
-// 	int	y1;
-// }	t_dpoints;
-
-//void	isometric(float *x, float *y, int z);
+//void	calculate_offsets(t_map *map, int window_width, int window_height);
+//void	my_keyhook(struct mlx_key_data key_data, void *param);
+void	calculate_offsets(t_map *map, float win_width, float win_height);
+void	my_keyhook(mlx_key_data_t keydata, void *param);
+void	draw_background(mlx_image_t *img);
 
 #endif

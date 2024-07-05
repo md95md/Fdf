@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:56:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/02 15:30:23 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:56:22 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	get_height(char **argv)
 	return (height);
 }
 
-void	fill_matrix(int *z_line, char *line)
+void	fill_matrix(t_point *points, char *line, int y, t_map *map)
 {
 	char	**numbers;
 	int		i;
@@ -68,7 +68,9 @@ void	fill_matrix(int *z_line, char *line)
 	i = 0;
 	while (numbers[i])
 	{
-		z_line[i] = ft_atoi(numbers[i]);
+		points[i].x = i * map->param.scale;
+		points[i].y = y * map->param.scale;
+		points[i].z = ft_atoi(numbers[i]) * map->param.z_scale;
 		free(numbers[i]);
 		i++;
 	}

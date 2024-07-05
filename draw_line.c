@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: S24/06/25 12:38:18 by agaleeva          #+#    #+#             */
-/*   Updated: S24/07/02 14:55:42 by agaleeva         ###   ########.fr       */
+/*   Created: 24/06/25 12:38:18 by agaleeva          #+#    #+#             */
+/*   Updated: 24/07/02 14:55:42 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,48 +20,44 @@ int	ft_max(int a, int b)
 	return (b);
 }
 
-int	ft_mod(int a)
+int	mod(int a)
 {
 	if (a < 0)
 		return (-a);
 	return (a);
 }
 
-void	draw_line(float x, float y, float x1, float y1, t_map *map)
+void	draw_line(t_point p0, t_point p1, t_map *map)
 {
 	float	x_step;
 	float	y_step;
 	int		max;
-	int		z;
-	int		z1;
 
-	z = map->matrix[(int)y / S][(int)x/ S];
-	z1 = map->matrix[(int)y1 / S][(int)x1 / S];
-	if (z > 0 || z1 > 0)
+	if (p0.z > 0 || p1.z > 0)
 		map->color = 0xFF0000FF;
-	else if (z == 0 || z1 == 0)
+	else if (p0.z == 0 || p1.z == 0)
 		map->color = 0x0000FFFF;
-	else if (z < 0 || z1 < 0)
+	else if (p0.z < 0 || p1.z < 0)
 		map->color = 0x00FF00FF;
-	// isometric(&x, &y, z);
-	// isometric(&x1, &y1, z1);
-	x_step = x1 - x;
-	y_step = y1 - y;
-	max = ft_max(ft_mod((int)x_step), ft_mod((int)y_step));
+	x_step = p1.x - p0.x;
+	y_step = p1.y - p0.y;
+	max = ft_max(mod((int)x_step), mod((int)y_step));
 	x_step /= max;
 	y_step /= max;
-	while ((int)(x - x1) || (int)(y - y1))
+	while ((int)(p0.x - p1.x) || (int)(p0.y - p1.y))
 	{
-		mlx_put_pixel(map->mlx, x, y, map->color);
-		x += x_step;
-		y += y_step;
+		mlx_put_pixel(map->mlx, (int)p0.x, (int)p0.y, map->color);
+		p0.x += x_step;
+		p0.y += y_step;
 	}
 }
 
 void	draw_map_array(mlx_image_t *img, t_map *map)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	t_point	p0;
+	t_point	p1;
 
 	y = 0;
 	while (y < map->height)
@@ -69,10 +65,26 @@ void	draw_map_array(mlx_image_t *img, t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
+			p0 = map->matrix[y][x];
+			isometric_projection(&p0);
+			p0.x += map->param.shift_x;
+			p0.y += map->param.shift_y;
 			if (x < map->width - 1)
-				draw_line(x * S, y * S, (x + 1) * S, y * S, map);
+			{
+				p1 = map->matrix[y][x + 1];
+				isometric_projection(&p1);
+				p1.x += map->param.shift_x;
+				p1.y += map->param.shift_y;
+				draw_line(p0, p1, map);
+			}
 			if (y < map->height - 1)
-				draw_line(x * S, y * S, x * S, (y + 1) * S, map);
+			{
+				p1 = map->matrix[y + 1][x];
+				isometric_projection(&p1);
+				p1.x += map->param.shift_x;
+				p1.y += map->param.shift_y;
+				draw_line(p0, p1, map);
+			}
 			x++;
 		}
 		y++;

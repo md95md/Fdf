@@ -6,28 +6,22 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:58:53 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/02 16:06:28 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:37:28 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// void	isometric(t_point *dot, float angle)
-// {
-// 	dot->x = (dot->x - dot->y) * cos(angle);
-// 	dot->y = (dot->x + dot->y) * sin(angle) - dot->z;
-// }
+//store the original x and y values before changing them
+//incorrect calculation for point->y because point->x has already been changed
 
-void	isometric(float *x, float *y, int z)
+void	isometric_projection(t_point *point)
 {
-	int	previous_x;
-	int	previous_y;
+	float	original_x;
+	float	original_y;
 
-	previous_x = *x;
-	previous_y = *y;
-	*x = (previous_x - previous_y) * cos(0.523599);
-	*y = (previous_x + previous_y) * sin(0.523599) - z;
+	original_x = point->x;
+	original_y = point->y;
+	point->x = (1 / sqrt(2)) * (original_x - original_y);
+	point->y = (original_x / sqrt(2)) + (original_y / sqrt(2)) - point->z;
 }
-
-// destination.x = source.x + cos(angle) * source.z
-// destination.y = source.y + sin(angle) * source.z
