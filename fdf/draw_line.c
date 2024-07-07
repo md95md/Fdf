@@ -51,39 +51,3 @@ void	draw_line(t_point p0, t_point p1, t_map *map)
 		p0.y += y_step;
 	}
 }
-
-void	draw_map_array(mlx_image_t *img, t_map *map)
-{
-	int		y;
-	int		x;
-	t_point	p0;
-	t_point	p1;
-
-	y = 0;
-	while (y < map->height)
-	{
-		x = 0;
-		while (x < map->width)
-		{
-			p0 = map->matrix[y][x];
-			isometric_projection(&p0);
-			shift_p0(&p0, map);
-			if (x < map->width - 1)
-			{
-				p1 = map->matrix[y][x + 1];
-				isometric_projection(&p1);
-				shift_p1(&p1, map);
-				draw_line(p0, p1, map);
-			}
-			if (y < map->height - 1)
-			{
-				p1 = map->matrix[y + 1][x];
-				isometric_projection(&p1);
-				shift_p1(&p1, map);
-				draw_line(p0, p1, map);
-			}
-			x++;
-		}
-		y++;
-	}
-}

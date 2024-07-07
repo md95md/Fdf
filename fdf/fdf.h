@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/07 14:32:27 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:50:10 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ void	smooth_scale(t_map *map);
 void	draw_stars(mlx_image_t *img);
 void	shift_p1(t_point *p1, t_map *map);
 void	shift_p0(t_point *p0, t_map *map);
+void	draw_horizontal_lines(mlx_image_t *img, t_map *map, int y);
+void	draw_vertical_lines(mlx_image_t *img, t_map *map, int x);
+void	apply_projections_and_shift(t_point *p, t_map *map);
 
 #endif

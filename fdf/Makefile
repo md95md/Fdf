@@ -7,7 +7,7 @@ MLX_HDIR = ../MLX42/include/MLX42
 CFLAGS = -I. -I$(LIBFT_DIR) -I$(GNL_DIR) -I$(MLX_HDIR) -I$(PRINTF_DIR) -g -O0
 LFLAGS = -Wall -Wextra -Werror -ldl -lglfw -pthread -lm 
 LIBS = $(LIBFT_DIR)/libft.a ../MLX42/build/libmlx42.a
-SRC = shift.c rotate.c hooks.c draw_line.c main.c read_map.c get_map.c \
+SRC = draw_map.c shift.c rotate.c hooks.c draw_line.c main.c read_map.c get_map.c \
 	../get_next_line/get_next_line.c \
 	../get_next_line/get_next_line_utils.c \
 	../ft_printf/ft_printf.c \
