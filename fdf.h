@@ -6,20 +6,23 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/05 18:30:50 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:32:23 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # define EXIT_FAILURE 1
+# define WIN_WIDTH 3600
+# define WIN_HEIGHT 1800
 
 # include <stdlib.h>
 # include <math.h>
 # include <stdio.h>
-# include "../libft/libft.h"
-# include "../get_next_line/get_next_line.h"
+# include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
+# include "../get_next_line/get_next_line.h"
+# include "../libft/libft.h"
 
 typedef struct s_point
 {
@@ -50,21 +53,27 @@ typedef struct s_map
 	t_param		param;
 }	t_map;
 
-void	draw_line(t_point p0, t_point p1, t_map *map);
-int		get_height(char **argv);
-int		get_width(char **argv);
-void	read_map(t_map *map, char **argv);
-void	draw_dots(mlx_image_t *img, t_map *matrix, uint32_t color);
-void	get_map(t_map *map, char **argv);
-void	draw_map_array(mlx_image_t *img, t_map *map);
-void	isometric_projection(t_point *point);
-void	free_error_points(t_map *map);
-void	fill_matrix(t_point *points, char *line, int y, t_map *map);
-void	free_error_points(t_map *map);
-//void	calculate_offsets(t_map *map, int window_width, int window_height);
-//void	my_keyhook(struct mlx_key_data key_data, void *param);
-void	calculate_offsets(t_map *map, float win_width, float win_height);
-void	my_keyhook(mlx_key_data_t keydata, void *param);
-void	draw_background(mlx_image_t *img);
+void		draw_line(t_point p0, t_point p1, t_map *map);
+int			get_height(char **argv);
+int			get_width(char **argv);
+void		read_map(t_map *map, char **argv);
+void		draw_map_array(mlx_image_t *img, t_map *map);
+void		isometric_projection(t_point *point);
+void		free_error_points(t_map *map);
+void		fill_matrix(t_point *points, char *line, int y, t_map *map);
+void		free_error_points(t_map *map);
+void		calculate_offsets(t_map *map, float win_width, float win_height);
+void		my_keyhook(mlx_key_data_t keydata, void *param);
+void		smooth_scale(t_map *map);
+void		draw_stars(mlx_image_t *img);
+void		draw_horizontal_lines(mlx_image_t *img, t_map *map, int y);
+void		draw_vertical_lines(mlx_image_t *img, t_map *map, int x);
+void		apply_projections_and_shift(t_point *p, t_map *map);
+void		shift_point(t_point *p, t_map *map);
+void		set_param(t_map *map);
+void		free_map(t_map *map);
+mlx_t		*initialize_mlx(void);
+mlx_image_t	*initialize_image(mlx_t *mlx);
+t_map		*initialize_map(void);
 
 #endif

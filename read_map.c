@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:27:57 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/05 17:09:52 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:46:07 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,34 @@ void	free_error_points(t_map *map)
 			i = 0;
 			while (i < map->height)
 			{
-				free(map->matrix[i]);
+				if (map->matrix[i])
+				{
+					free(map->matrix[i]);
+					map->matrix[i] = NULL;
+				}
 				i++;
 			}
 			free(map->matrix);
+			map->matrix = NULL;
 		}
-		free(map);
 	}
-	exit(EXIT_FAILURE);
 }
 
 void	get_map_size(t_map *map, char **argv)
 {
 	map->width = get_width(argv);
 	map->height = get_height(argv);
-	map->matrix = (t_point **)malloc(map->height * sizeof(t_point *));
-	if (!map->matrix)
-		free_error_points(map);
 }
 
 void	read_map_help(t_map *map, char **argv)
 {
-	int		fd;
-	char	*line;
-	int		i;
+	int	i;
 
-	get_map_size(map, argv);
 	i = 0;
+	get_map_size(map, argv);
+	map->matrix = (t_point **)malloc(map->height * sizeof(t_point *));
+	if (!map->matrix)
+		free_error_points(map);
 	while (i < map->height)
 	{
 		map->matrix[i] = (t_point *)malloc(map->width * sizeof(t_point));
