@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/25 14:32:23 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:42:00 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
-# include "../get_next_line/get_next_line.h"
+# include "../get_next_line_fdf/get_next_line.h"
 # include "../libft/libft.h"
 
 typedef struct s_point
@@ -61,7 +61,6 @@ void		draw_map_array(mlx_image_t *img, t_map *map);
 void		isometric_projection(t_point *point);
 void		free_error_points(t_map *map);
 void		fill_matrix(t_point *points, char *line, int y, t_map *map);
-void		free_error_points(t_map *map);
 void		calculate_offsets(t_map *map, float win_width, float win_height);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 void		smooth_scale(t_map *map);
@@ -72,6 +71,7 @@ void		apply_projections_and_shift(t_point *p, t_map *map);
 void		shift_point(t_point *p, t_map *map);
 void		set_param(t_map *map);
 void		free_map(t_map *map);
+void		free_1(t_map *map);
 mlx_t		*initialize_mlx(void);
 mlx_image_t	*initialize_image(mlx_t *mlx);
 t_map		*initialize_map(void);

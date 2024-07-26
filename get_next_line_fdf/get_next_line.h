@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:08:26 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/26 15:18:27 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:58:12 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "../libft/libft.h"
+#include "../libft/libft.h"
 
-//size_t	ft_strlen(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t	ft_strlen(const const char *s);
 char	*get_next_line(int fd);
-//char	*ft_strjoin(char const *s1, char const *s2);
-//char	*ft_strchr(const char *s, int c);
-//char	*ft_strdup(const char *s);
-//char	*ft_substr(char const *s, unsigned int start, size_t len);
-void	fill_str(char *res, char const *s1, char const *s2);
+char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s);
+void	fill_str(char *res, const char *s1, const char *s2);
 
 #endif

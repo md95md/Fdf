@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 16:14:28 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/07 14:02:24 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/02/16 11:58:36 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/03/05 15:40:47 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int main (void)
+int	ft_isalpha(int c)
 {
-    int d = 42;
-    ft_printf("%d\n", d);
-    return (0);
+	if ((c > 64 && c < 91) || (c > 96 && c < 123))
+		return (1);
+	return (0);
 }

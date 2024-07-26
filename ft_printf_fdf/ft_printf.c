@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:13:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/03/25 16:16:48 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:42:25 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_printf(const char *format, ...)
 	va_list	args;
 	int		count;
 
+	if (!format)
+		return (1);
 	count = 0;
 	va_start (args, format);
 	while (*format)

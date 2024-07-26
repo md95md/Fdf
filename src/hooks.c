@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:54:22 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/16 17:10:30 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:19:41 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	draw_stars(mlx_image_t *img)
 		while (x < 3840)
 		{
 			mlx_put_pixel(img, x, y, 0x000000FF);
-			if (rand() % 2000 == 0)
-				mlx_put_pixel(img, x, y, 0xFFFFFFFF);
+			// if (rand() % 2000 == 0)
+			// 	mlx_put_pixel(img, x, y, 0xFFFFFFFF);
 			x++;
 		}
 		y++;

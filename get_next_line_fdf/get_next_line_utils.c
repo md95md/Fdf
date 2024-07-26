@@ -6,24 +6,24 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 12:08:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/26 15:18:03 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:58:07 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
 	len = 0;
-	while (str[len])
+	while (s[len])
 		len++;
 	return (len);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char			*res;
 
@@ -34,7 +34,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-void	fill_str(char *res, char const *s1, char const *s2)
+void	fill_str(char *res, const char *s1, const char *s2)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -63,17 +63,20 @@ char	*ft_strchr(const char *s, int c)
 char	*ft_strdup(const char *s)
 {
 	char	*dest;
-	size_t	i;
+	char	*dest2;
+	size_t	len;
 
-	i = 0;
-	dest = (char *)malloc((ft_strlen(s) + 1));
-	if (!dest)
+	len = ft_strlen(s);
+	dest = (char *)malloc((len + 1) * sizeof(char));
+	if (dest == NULL)
 		return (NULL);
-	while (s[i])
+	dest2 = dest;
+	while (*s)
 	{
-		dest[i] = s[i];
-		i++;
+		*dest = *s;
+		dest++;
+		s++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	*dest = '\0';
+	return (dest2);
 }

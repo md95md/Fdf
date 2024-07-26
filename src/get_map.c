@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:56:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/16 16:33:09 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:49:37 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	get_width(char **argv)
 	char	**split_line;
 
 	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (0);
+	if (fd == -1 || read(fd, NULL, 0) == -1)
+		exit(-1);
 	line = get_next_line(fd);
 	if (!line)
 		return (0);

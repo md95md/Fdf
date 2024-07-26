@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:47:13 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/06/26 15:18:08 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:55:13 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	subs = (char *)malloc((len + 1) * sizeof(char));
 	if (subs == 0)
 		return (NULL);
-	while (i < len)
+	while (*s && len--)
 	{
 		subs[i] = s[start + i];
 		i++;
@@ -113,37 +113,3 @@ static char	*set_line(char *line_buffer)
 	line_buffer[i + 1] = 0;
 	return (prev_c);
 }
-
-// #include <stdio.h>
-
-// int main(void)
-// {
-// 	int fd;
-// 	char *line;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		printf("1: %s", line);
-// 		free(line);
-// 		line = get_next_line(fd);
-// 	}
-// 	close(fd);
-//     printf("\n");
-//     int b_read = 0;
-//     b_read = read(fd, line, BUFFER_SIZE);
-//         printf("2: %s", line);
-//     close(fd);
-//     printf("\n");
-//     fd = open("test.txt", O_RDONLY);
-// 	line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		printf("3: %s", line);
-// 		free(line);
-// 		line = get_next_line(fd);
-// 	}
-//     //printf("\n");
-// 	return (0);
-// }

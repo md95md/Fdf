@@ -6,7 +6,7 @@
 #    By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 13:11:57 by agaleeva          #+#    #+#              #
-#    Updated: 2024/07/07 14:06:44 by agaleeva         ###   ########.fr        #
+#    Updated: 2024/03/27 11:41:10 by agaleeva         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libftprintf.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ft_printf.c ft_print.c ft_put.c main.c
+SRC = ft_printf.c ft_print.c ft_put.c
 
 OBJ = $(SRC:.c=.o)
 
