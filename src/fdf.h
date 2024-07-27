@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/26 20:42:00 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:07:59 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../MLX42_fdf/include/MLX42/MLX42.h"
 # include "../get_next_line_fdf/get_next_line.h"
 # include "../libft/libft.h"
 
