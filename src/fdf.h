@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 15:11:39 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:27:19 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_param
 	float	angle;
 	float	shift_x;
 	float	shift_y;
+	void	*img;
 }	t_param;
 
 typedef struct s_map
@@ -50,14 +51,24 @@ typedef struct s_map
 	int			width;
 	void		*mlx;
 	void		*win;
+	void		*img;
+	t_param		img_data;
 	uint32_t	color;
 	t_param		param;
 }	t_map;
 
+typedef struct s_param2
+{
+    t_map		*map;
+    mlx_image_t	*img;
+    mlx_t		*mlx;
+} t_param2;
+
 void		draw_line(t_point p0, t_point p1, t_map *map);
 int			get_height(char **argv);
 int			get_width(char **argv);
-void		read_map(t_map *map, char **argv);
+//void		read_map(t_map *map, char **argv);
+int read_map(t_map *map, char **argv);
 void		draw_map_array(mlx_image_t *img, t_map *map);
 void		isometric_projection(t_point *point);
 void		free_error_points(t_map *map);
@@ -73,8 +84,9 @@ void		shift_point(t_point *p, t_map *map);
 void		set_param(t_map *map);
 void		free_map(t_map *map);
 void		free_1(t_map *map);
+void		cleanup(t_map *map, mlx_image_t *img, mlx_t *mlx);
 mlx_t		*initialize_mlx(void);
 mlx_image_t	*initialize_image(mlx_t *mlx);
 t_map		*initialize_map(void);
-
+int	key_press(int keycode, t_map *vars);
 #endif

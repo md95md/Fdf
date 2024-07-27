@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 15:11:30 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:34:47 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,46 @@ int	main(int argc, char **argv)
 	t_map			*map;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	int				fd;
 
+	#include "libft.h" // Include the appropriate header file
+	
 	if (argc != 2 || !ft_strnstr(argv[1], ".fdf", ft_strlen(argv[1])))
+	{
+		ft_printf("Usage: ./fdf <filename>.fdf\n");
 		exit(1);
+	}
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1)
+    {
+        ft_printf("Error: Unable to open file %s\n", argv[1]);
+        exit(1);
+    }
+    close(fd);
 	map = initialize_map();
-	ft_printf("map: %s\n", argv[1]);
+	if (!map)
+		exit(1);
 	mlx = initialize_mlx();
+	if (!mlx)
+	{
+		free_error_points(map);
+		exit(1);
+	}
 	img = initialize_image(mlx);
+	if (!img)
+	{
+		free_error_points(map);
+		mlx_terminate(mlx);
+		exit(1);
+	}
 	draw_stars(img);
 	mlx_image_to_window(mlx, img, 0, 0);
-	read_map(map, argv);
-	free_error_points(map);
+    if (!read_map(map, argv)) // Now read_map returns an int indicating success or failure
+    {
+        ft_printf("Error: Failed to read map\n");
+        cleanup(map, img, mlx);
+        exit(1);
+    }
 	smooth_scale(map);
 	set_param(map);
 	read_map(map, argv);
@@ -47,6 +76,8 @@ int	main(int argc, char **argv)
 	mlx_key_hook(mlx, &my_keyhook, NULL);
 	mlx_loop(mlx);
 	cleanup(map, img, mlx);
+	free(map);
+	return (0);
 }
 
 mlx_t	*initialize_mlx(void)
@@ -55,7 +86,10 @@ mlx_t	*initialize_mlx(void)
 
 	mlx = mlx_init(3840, 2160, "FDF", true);
 	if (!mlx)
+	{
+		ft_printf("Error: Failed to initialize MLX\n");
 		return (NULL);
+	}
 	return (mlx);
 }
 
@@ -81,10 +115,11 @@ t_map	*initialize_map(void)
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 	{
-		free_error_points(map);
+        ft_printf("Error: Failed to initialize map\n");
 		exit(1);
 	}
+	map->matrix = NULL;
 	return (map);
 }
 
-// valgrind --leak-check=full ./fdf fdf/maps/42.fdf
+// valgrind --leak-check=full ./fdf ./test_maps/42.fdf
