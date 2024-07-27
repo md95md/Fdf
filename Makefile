@@ -19,6 +19,9 @@ SRC = ./src/draw_map.c \
 		./src/get_map.c \
 		./get_next_line_fdf/get_next_line.c \
 		./get_next_line_fdf/get_next_line_utils.c \
+		./ft_printf_fdf/ft_printf.c \
+		./ft_printf_fdf/ft_put.c \
+		./ft_printf_fdf/ft_print.c \
 
 OBJ = $(SRC:%.c=%.o)
 HEADER = ./src/fdf.h $(MLX_HDIR)/MLX42.h $(LIBFT_DIR)/libft.h $(PRINTF_DIR)/ft_printf.h $(GNL_DIR)/get_next_line.h

@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/26 20:53:32 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:11:30 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 	if (argc != 2 || !ft_strnstr(argv[1], ".fdf", ft_strlen(argv[1])))
 		exit(1);
 	map = initialize_map();
+	ft_printf("map: %s\n", argv[1]);
 	mlx = initialize_mlx();
 	img = initialize_image(mlx);
 	draw_stars(img);

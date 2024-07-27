@@ -6,24 +6,24 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:48:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/03/27 11:42:32 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:16:00 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	len;
 
-	len = 0;
-	while (*str)
-	{
-		len++;
-		str++;
-	}
-	return (len);
-}
+// 	len = 0;
+// 	while (*str)
+// 	{
+// 		len++;
+// 		str++;
+// 	}
+// 	return (len);
+// }
 
 int	ft_printstr(char *s)
 {
