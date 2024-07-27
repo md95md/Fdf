@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:54:22 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 18:59:44 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:08:07 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void my_keyhook(mlx_key_data_t keydata, void *param)
 
     if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
     {
-        mlx_loop(hook_params->mlx);
         cleanup(hook_params->map, hook_params->img, hook_params->mlx);
+		exit(0);
     }
 }
 

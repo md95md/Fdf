@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 19:00:11 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:07:29 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
     hook_params.mlx = mlx; // Assuming mlx is already initialized
     hook_params.img = img; // Assuming img is already initialized
     hook_params.map = map; // Assuming map is already initialized
-    //mlx_key_hook(window, my_keyhook, &hook_params); // Corrected: Added missing semicolon
+    mlx_key_hook(mlx, &my_keyhook, &hook_params);
 	mlx_loop(mlx);
 	cleanup(map, img, mlx);
 	return (0);
