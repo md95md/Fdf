@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:27:57 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 16:07:58 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:59:05 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,33 +60,27 @@ void	read_map_help(t_map *map, char **argv)
 	}
 }
 
-int read_map(t_map *map, char **argv)
+void	read_map(t_map *map, char **argv)
 {
-    int fd;
-    char *line;
-    int i;
+	int		fd;
+	char	*line;
+	int		i;
 
-    get_map_size(map, argv);
-    read_map_help(map, argv);
-
-    fd = open(argv[1], O_RDONLY);
-    if (fd == -1)
-    {
-        free_error_points(map);
-        return 0; // Indicate failure
-    }
-
-    i = 0;
-    line = get_next_line(fd);
-    while (line != NULL)
-    {
-        fill_matrix(map->matrix[i], line, i, map);
-        free(line);
-        i++;
-        line = get_next_line(fd);
-    }
-    close(fd);
-    return 1; // Indicate success
+	get_map_size(map, argv);
+	read_map_help(map, argv);
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		free_error_points(map);
+	i = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		fill_matrix(map->matrix[i], line, i, map);
+		free(line);
+		i++;
+		line = get_next_line(fd);
+	}
+	close(fd);
 }
 
 // void	read_map(t_map *map, char **argv)

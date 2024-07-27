@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:05:50 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 18:27:19 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:00:03 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ typedef struct s_map
 	t_param		param;
 }	t_map;
 
-typedef struct s_param2
+typedef struct s_hook_params
 {
-    t_map		*map;
-    mlx_image_t	*img;
-    mlx_t		*mlx;
-} t_param2;
+    mlx_t *mlx;
+    mlx_image_t *img;
+    t_map *map;
+} t_hook_params;
 
 void		draw_line(t_point p0, t_point p1, t_map *map);
 int			get_height(char **argv);
 int			get_width(char **argv);
-//void		read_map(t_map *map, char **argv);
-int read_map(t_map *map, char **argv);
+void		read_map(t_map *map, char **argv);
+//int read_map(t_map *map, char **argv);
 void		draw_map_array(mlx_image_t *img, t_map *map);
 void		isometric_projection(t_point *point);
 void		free_error_points(t_map *map);

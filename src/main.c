@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 18:34:47 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:00:11 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void cleanup(t_map *map, mlx_image_t *img, mlx_t *mlx)
 {
     if (map)
+	{
         free_error_points(map);
+		free(map);
+	}
     if (img)
         mlx_delete_image(mlx, img);
     if (mlx)
@@ -61,22 +64,25 @@ int	main(int argc, char **argv)
 	}
 	draw_stars(img);
 	mlx_image_to_window(mlx, img, 0, 0);
-    if (!read_map(map, argv)) // Now read_map returns an int indicating success or failure
-    {
-        ft_printf("Error: Failed to read map\n");
-        cleanup(map, img, mlx);
-        exit(1);
-    }
+    // if (!read_map(map, argv))
+    // {
+    //     ft_printf("Error: Failed to read map\n");
+    //     cleanup(map, img, mlx);
+    //     exit(1);
+    // }
 	smooth_scale(map);
 	set_param(map);
 	read_map(map, argv);
 	calculate_offsets(map, WIN_WIDTH, WIN_HEIGHT);
 	map->mlx = img;
 	draw_map_array(img, map);
-	mlx_key_hook(mlx, &my_keyhook, NULL);
+	t_hook_params hook_params;
+    hook_params.mlx = mlx; // Assuming mlx is already initialized
+    hook_params.img = img; // Assuming img is already initialized
+    hook_params.map = map; // Assuming map is already initialized
+    //mlx_key_hook(window, my_keyhook, &hook_params); // Corrected: Added missing semicolon
 	mlx_loop(mlx);
 	cleanup(map, img, mlx);
-	free(map);
 	return (0);
 }
 
