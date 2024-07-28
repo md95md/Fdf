@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/28 16:20:55 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:09:30 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	main(int argc, char **argv)
 	map->mlx = img;
 	draw_map_array(img, map);
 	t_hook_params hook_params;
-    hook_params.mlx = mlx; // Assuming mlx is already initialized
-    hook_params.img = img; // Assuming img is already initialized
-    hook_params.map = map; // Assuming map is already initialized
+    hook_params.mlx = mlx;
+    hook_params.img = img;
+    hook_params.map = map;
     mlx_key_hook(mlx, &my_keyhook, &hook_params);
 	mlx_loop(mlx);
 	cleanup(map, img, mlx);

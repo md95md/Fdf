@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:56:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/28 16:14:19 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:09:02 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	get_width(char **argv)
 	line = get_next_line(fd);
 	if (!line)
 		return (0);
-	printf("line = %s\n", line);
 	if (!is_digit_string(line))
 	{
 		free(line);

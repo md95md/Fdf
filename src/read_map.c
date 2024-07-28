@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:27:57 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/28 16:09:13 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:10:50 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	read_map(t_map *map, char **argv)
 
 	if (get_map_size(map, argv) == 0)
 		return (0);
+	get_map_size(map, argv);
 	read_map_help(map, argv);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
