@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:27:57 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/28 15:29:28 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:09:13 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	read_map_help(t_map *map, char **argv)
 	i = 0;
 	if (get_map_size(map, argv) == 0)
 		return (0);
+	get_map_size(map, argv);
 	map->matrix = (t_point **)malloc(map->height * sizeof(t_point *));
 	if (!map->matrix)
 		free_error_points(map);

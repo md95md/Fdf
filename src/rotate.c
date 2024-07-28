@@ -6,11 +6,12 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:58:53 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/07 15:56:43 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:24:38 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 //store the original x and y values before changing them
 //incorrect calculation for point->y because point->x has already been changed

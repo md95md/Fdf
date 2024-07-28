@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 13:37:52 by sliashko          #+#    #+#             */
-/*   Updated: 2024/07/28 16:44:02 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/07/28 16:00:35 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/07/28 16:03:10 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
@@ -22,21 +22,21 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_gnl
+typedef struct s_list2
 {
 	char			*content;
-	struct s_gnl	*next;
-}	t_gnl;
+	struct s_list2	*next;
+}	t_list2;
 
-t_gnl		*get_last_node(t_gnl *lst);
-int			search_for_newline(t_gnl *list);
-void		append_node(t_gnl **list, char *buffer_batch);
-int			create_list(t_gnl **list, int fd);
-size_t		len_till_nl(t_gnl	*start_node);
+t_list2		*get_last_node(t_list2 *lst);
+int			search_for_newline(t_list2 *list);
+void		append_node(t_list2 **list, char *buffer_batch);
+int			create_list(t_list2 **list, int fd);
+size_t		len_till_nl(t_list2	*start_node);
 char		*get_next_line(int fd);
-void		keep_rest(t_gnl **list);
-void		free_list(t_gnl **list, t_gnl *clean_node, char *buffer);
-char		*retrive_line(t_gnl	*list);
+void		keep_rest(t_list2 **list);
+void		free_list(t_list2 **list, t_list2 *clean_node, char *buffer);
+char		*retrive_line(t_list2	*list);
 int			fill_line_from_content(char *line, int *i, char *content);
 
-# endif
+#endif

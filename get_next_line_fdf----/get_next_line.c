@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 13:48:50 by sliashko          #+#    #+#             */
-/*   Updated: 2024/07/28 16:42:17 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/07/28 16:01:09 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/07/28 16:02:02 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	fill_line_from_content(char *line, int *i, char *content)
 }
 
 //Creates an array and copies there charachers till new line
-char	*retrive_line(t_gnl	*list)
+char	*retrive_line(t_list2	*list)
 {
 	char	*line;
 	int		i;
@@ -54,9 +54,9 @@ char	*retrive_line(t_gnl	*list)
 }
 
 //Cleans all the allocated blocks of memory in linked list
-void	free_list(t_gnl **list, t_gnl *clean_node, char *buffer)
+void	free_list(t_list2 **list, t_list2 *clean_node, char *buffer)
 {
-	t_gnl	*temp_node;
+	t_list2	*temp_node;
 
 	if (*list == NULL)
 		return ;
@@ -79,16 +79,16 @@ void	free_list(t_gnl **list, t_gnl *clean_node, char *buffer)
 
 //Keeps the remaining part of the read chunk after new line
 //to work with it on next iteration
-void	keep_rest(t_gnl **list)
+void	keep_rest(t_list2 **list)
 {
-	t_gnl	*clean_node;
-	t_gnl	*last_node;
+	t_list2	*clean_node;
+	t_list2	*last_node;
 	int		i;
 	int		j;
 	char	*buffer;
 
 	buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	clean_node = malloc(sizeof(t_gnl));
+	clean_node = malloc(sizeof(t_list2));
 	if (buffer == NULL || clean_node == NULL)
 		return ;
 	last_node = get_last_node(*list);
@@ -111,7 +111,7 @@ void	keep_rest(t_gnl **list)
 //Our main function itself
 char	*get_next_line(int fd)
 {
-	static t_gnl	*list;
+	static t_list2	*list;
 	char			*next_line;
 	int				status;
 

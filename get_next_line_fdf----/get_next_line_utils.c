@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 13:48:58 by sliashko          #+#    #+#             */
-/*   Updated: 2024/07/28 16:42:34 by agaleeva         ###   ########.fr       */
+/*   Created: 2024/07/28 16:01:33 by agaleeva          #+#    #+#             */
+/*   Updated: 2024/07/28 16:01:43 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 //This function extracts the last node from linked list
-t_gnl	*get_last_node(t_gnl *lst)
+t_list2	*get_last_node(t_list2 *lst)
 {
-	t_gnl	*curr_node;
+	t_list2	*curr_node;
 
 	if (lst == NULL)
 		return (NULL);
@@ -28,9 +28,9 @@ t_gnl	*get_last_node(t_gnl *lst)
 }
 
 //Goes over content of nodes untill it meets new line
-int	search_for_newline(t_gnl *list)
+int	search_for_newline(t_list2 *list)
 {
-	t_gnl	*curr_node;
+	t_list2	*curr_node;
 	char	*curr_content;
 
 	curr_node = list;
@@ -49,13 +49,13 @@ int	search_for_newline(t_gnl *list)
 }
 
 //Adding new node to the end of linked list
-void	append_node(t_gnl **list, char *buffer_batch)
+void	append_node(t_list2 **list, char *buffer_batch)
 {
-	t_gnl	*last_node;
-	t_gnl	*new_node;
+	t_list2	*last_node;
+	t_list2	*new_node;
 
 	last_node = get_last_node(*list);
-	new_node = (t_gnl *) malloc(sizeof(t_gnl));
+	new_node = (t_list2 *) malloc(sizeof(t_list2));
 	if (new_node == NULL)
 		return ;
 	if (*list == NULL)
@@ -70,7 +70,7 @@ void	append_node(t_gnl **list, char *buffer_batch)
 
 // Reads chunks untill it faces 1st newline within chunks
 // returns status of reading
-int	create_list(t_gnl **list, int fd)
+int	create_list(t_list2 **list, int fd)
 {
 	char	*buffer;
 	int		char_read;
@@ -99,10 +99,10 @@ int	create_list(t_gnl **list, int fd)
 
 //Counts num of chars in content untill first new line 
 //We need this amount for allocating memory
-size_t	len_till_nl(t_gnl	*start_node)
+size_t	len_till_nl(t_list2	*start_node)
 {
 	size_t	len;
-	t_gnl	*curr_node;
+	t_list2	*curr_node;
 	char	*curr_content;
 
 	len = 0;

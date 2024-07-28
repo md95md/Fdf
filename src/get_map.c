@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:56:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/28 15:46:48 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:14:19 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int is_digit_string(char *str)
 {
-    while (*str)
-    {
-        while (*str == ' ')
-            str++;
-        if (*str == '\0' || *str == '\n')
-            break;
-        if (*str == '-')
-        {
-            str++;
-            if (*str < '0' || *str > '9')
-                return 0;
+	while (*str)
+	{
+		while (*str == ' ')
+			str++;
+		if (*str == '\0' || *str == '\n')
+		    break;
+		if (*str == '-')
+		{
+			str++;
+			if (*str < '0' || *str > '9')
+				return 0;
         }
         else if (*str < '0' || *str > '9')
         {
@@ -48,6 +48,7 @@ int	get_width(char **argv)
 	line = get_next_line(fd);
 	if (!line)
 		return (0);
+	printf("line = %s\n", line);
 	if (!is_digit_string(line))
 	{
 		free(line);
@@ -72,6 +73,7 @@ int	get_height(char **argv)
 	int		fd;
 	int		height;
 	char	*line;
+
 	height = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
@@ -97,6 +99,7 @@ void	fill_matrix(t_point *points, char *line, int y, t_map *map)
 {
 	char	**numbers;
 	int		i;
+
 	numbers = ft_split(line, ' ');
 	i = 0;
 	while (numbers[i])
