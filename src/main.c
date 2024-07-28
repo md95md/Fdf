@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:30:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 19:07:29 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:27:49 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ int	main(int argc, char **argv)
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	int				fd;
-
-	#include "libft.h" // Include the appropriate header file
-	
 	if (argc != 2 || !ft_strnstr(argv[1], ".fdf", ft_strlen(argv[1])))
 	{
 		ft_printf("Usage: ./fdf <filename>.fdf\n");
@@ -64,12 +61,14 @@ int	main(int argc, char **argv)
 	}
 	draw_stars(img);
 	mlx_image_to_window(mlx, img, 0, 0);
-    // if (!read_map(map, argv))
-    // {
-    //     ft_printf("Error: Failed to read map\n");
-    //     cleanup(map, img, mlx);
-    //     exit(1);
-    // }
+	read_map(map, argv);
+	free_error_points(map);
+    if (!read_map(map, argv))
+    {
+        ft_printf("Error: Failed to read map\n");
+        cleanup(map, img, mlx);
+        exit(1);
+    }
 	smooth_scale(map);
 	set_param(map);
 	read_map(map, argv);

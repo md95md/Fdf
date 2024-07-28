@@ -6,7 +6,7 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:27:57 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 18:59:05 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:29:28 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,24 @@ void	free_error_points(t_map *map)
 	}
 }
 
-void	get_map_size(t_map *map, char **argv)
+int	get_map_size(t_map *map, char **argv)
 {
+	if (get_width(argv) == 0)
+		return (0);
 	map->width = get_width(argv);
+	if (get_height(argv) == 0)
+		return (0);
 	map->height = get_height(argv);
+	return (1);
 }
 
-void	read_map_help(t_map *map, char **argv)
+int	read_map_help(t_map *map, char **argv)
 {
 	int	i;
 
 	i = 0;
-	get_map_size(map, argv);
+	if (get_map_size(map, argv) == 0)
+		return (0);
 	map->matrix = (t_point **)malloc(map->height * sizeof(t_point *));
 	if (!map->matrix)
 		free_error_points(map);
@@ -58,15 +64,17 @@ void	read_map_help(t_map *map, char **argv)
 			free_error_points(map);
 		i++;
 	}
+	return (1);
 }
 
-void	read_map(t_map *map, char **argv)
+int	read_map(t_map *map, char **argv)
 {
 	int		fd;
 	char	*line;
 	int		i;
 
-	get_map_size(map, argv);
+	if (get_map_size(map, argv) == 0)
+		return (0);
 	read_map_help(map, argv);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
@@ -81,6 +89,7 @@ void	read_map(t_map *map, char **argv)
 		line = get_next_line(fd);
 	}
 	close(fd);
+	return (1);
 }
 
 // void	read_map(t_map *map, char **argv)
