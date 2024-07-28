@@ -6,25 +6,33 @@
 /*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:56:06 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/28 15:29:19 by agaleeva         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:46:48 by agaleeva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	is_digit_string(char *str)
+int is_digit_string(char *str)
 {
-	while (*str)
-	{
-		while (*str == ' ')
-			str++;
-		if (*str == '\0' || *str == '\n')
-			break;
-		if (*str < '0' || *str > '9')
-			return (0);
-		str++;
-	}
-	return (1);
+    while (*str)
+    {
+        while (*str == ' ')
+            str++;
+        if (*str == '\0' || *str == '\n')
+            break;
+        if (*str == '-')
+        {
+            str++;
+            if (*str < '0' || *str > '9')
+                return 0;
+        }
+        else if (*str < '0' || *str > '9')
+        {
+            return 0;
+        }
+        str++;
+    }
+    return 1;
 }
 
 int	get_width(char **argv)
@@ -33,6 +41,7 @@ int	get_width(char **argv)
 	int		width;
 	char	*line;
 	char	**split_line;
+
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1 || read(fd, NULL, 0) == -1)
 		exit(-1);
@@ -70,13 +79,13 @@ int	get_height(char **argv)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		height++;
 		if (!is_digit_string(line))
 		{
 			free(line);
 			close(fd);
 			return (0);
 		}
+		height++;
 		free(line);
 		line = get_next_line(fd);
 	}
