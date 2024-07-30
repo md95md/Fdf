@@ -3,30 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sliashko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 12:08:26 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/27 15:15:34 by agaleeva         ###   ########.fr       */
+/*   Created: 2023/09/14 13:37:52 by sliashko          #+#    #+#             */
+/*   Updated: 2023/09/18 12:04:06 by sliashko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+
+#  define BUFFER_SIZE 10
+
 # endif
 
-# include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-#include "../libft/libft.h"
+# include <stdlib.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-//size_t	ft_strlen(const const char *s);
-char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s);
-void	fill_str(char *res, const char *s1, const char *s2);
+typedef struct s_list2
+{
+	char			*content;
+	struct s_list2	*next;
+}	t_list2;
+
+t_list2		*get_last_node(t_list2 *lst);
+int			search_for_newline(t_list2 *list);
+void		append_node(t_list2 **list, char *buffer_batch);
+int			create_list(t_list2 **list, int fd);
+size_t		len_till_nl(t_list2	*start_node);
+char		*get_next_line(int fd);
+void		keep_rest(t_list2 **list);
+void		free_list(t_list2 **list, t_list2 *clean_node, char *buffer);
+char		*retrive_line(t_list2	*list);
+int			fill_line_from_content(char *line, int *i, char *content);
 
 #endif

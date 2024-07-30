@@ -3,113 +3,132 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sliashko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 17:47:13 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/25 15:55:13 by agaleeva         ###   ########.fr       */
+/*   Created: 2023/09/14 13:48:50 by sliashko          #+#    #+#             */
+/*   Updated: 2023/09/14 13:48:51 by sliashko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
 
-static char	*set_line(char *line_buffer);
-static char	*fill_line_buffer(int fd, char *prev_c, char *buffer);
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+//This is sub-routine function for retrieve line
+// I moved it out because of Norminette
+int	fill_line_from_content(char *line, int *i, char *content)
 {
-	char	*subs;
-	size_t	i;
+	int	j;
 
-	i = 0;
-	if (start >= ft_strlen(s))
+	j = 0;
+	while (content[j] != '\0')
 	{
-		subs = (char *)malloc(1 * sizeof(char));
-		subs[0] = 0;
-		return (subs);
+		line[*i] = content[j];
+		if (content[j] == '\n')
+		{
+			line[*i + 1] = '\0';
+			return (1);
+		}
+		(*i)++;
+		j++;
 	}
-	if (len > ft_strlen(s + start))
-		len = ft_strlen(s + start);
-	subs = (char *)malloc((len + 1) * sizeof(char));
-	if (subs == 0)
-		return (NULL);
-	while (*s && len--)
-	{
-		subs[i] = s[start + i];
-		i++;
-	}
-	subs[i] = '\0';
-	return (subs);
+	return (0);
 }
 
-char	*get_next_line(int fd)
+//Creates an array and copies there charachers till new line
+char	*retrive_line(t_list2	*list)
 {
-	static char	*prev_c;
-	char		*buffer;
-	char		*line;
+	char	*line;
+	int		i;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	line = (char *) malloc(sizeof(char) * (len_till_nl(list) + 2));
+	if (line == NULL)
 		return (NULL);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	line = fill_line_buffer(fd, prev_c, buffer);
-	free (buffer);
-	buffer = NULL;
-	if (!line)
-		return (NULL);
-	prev_c = set_line(line);
+	i = 0;
+	while (list != NULL)
+	{
+		if (fill_line_from_content(line, &i, list->content))
+			return (line);
+		list = list->next;
+	}
+	line[i] = '\0';
 	return (line);
 }
 
-static char	*fill_line_buffer(int fd, char *prev_c, char *buffer)
-
+//Cleans all the allocated blocks of memory in linked list
+void	free_list(t_list2 **list, t_list2 *clean_node, char *buffer)
 {
-	ssize_t		bytes_read;
-	char		*temp;
+	t_list2	*temp_node;
 
-	bytes_read = 1;
-	while (bytes_read > 0)
+	if (*list == NULL)
+		return ;
+	while (*list)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes_read)
-			break ;
-		else if (bytes_read < 0)
-		{
-			free (prev_c);
-			return (NULL);
-		}
-		buffer[bytes_read] = 0;
-		if (!prev_c)
-			prev_c = ft_strdup("");
-		temp = prev_c;
-		prev_c = ft_strjoin(temp, buffer);
-		free (temp);
-		temp = NULL;
-		if (ft_strchr(prev_c, '\n'))
-			break ;
+		temp_node = (*list)->next;
+		free((*list)->content);
+		free((*list));
+		*list = temp_node;
 	}
-	return (prev_c);
+	*list = NULL;
+	if (*buffer != '\0' || clean_node == NULL)
+		*list = clean_node;
+	else
+	{
+		free(buffer);
+		free(clean_node);
+	}
 }
 
-static char	*set_line(char *line_buffer)
+//Keeps the remaining part of the read chunk after new line
+//to work with it on next iteration
+void	keep_rest(t_list2 **list)
 {
-	char		*prev_c;
-	size_t		i;
+	t_list2	*clean_node;
+	t_list2	*last_node;
+	int		i;
+	int		j;
+	char	*buffer;
 
+	buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	clean_node = malloc(sizeof(t_list2));
+	if (buffer == NULL || clean_node == NULL)
+		return ;
+	last_node = get_last_node(*list);
 	i = 0;
-	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
+	j = 0;
+	if (last_node == NULL || last_node->content == NULL)
+		return ;
+	while (last_node->content[i] && last_node->content[i] != '\n')
 		i++;
-	if (line_buffer[i] == 0 || line_buffer[1] == 0)
-		return (NULL);
-	prev_c = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
-	if (prev_c == NULL)
-		return (NULL);
-	if (*prev_c == 0)
+	if (last_node->content[i] == '\n')
+		i++;
+	while (last_node->content[i] != '\0')
+		buffer[j++] = last_node->content[i++];
+	buffer[j] = '\0';
+	clean_node->content = buffer;
+	clean_node->next = NULL;
+	free_list(list, clean_node, buffer);
+}
+
+//Our main function itself
+char	*get_next_line(int fd)
+{
+	static t_list2	*list;
+	char			*next_line;
+	int				status;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		free(prev_c);
-		prev_c = NULL;
+		free_list(&list, NULL, "");
+		return (NULL);
 	}
-	line_buffer[i + 1] = 0;
-	return (prev_c);
+	status = create_list(&list, fd);
+	if (status == -1)
+	{
+		free_list(&list, NULL, "");
+		return (NULL);
+	}
+	if (list == NULL)
+		return (NULL);
+	next_line = retrive_line(list);
+	keep_rest(&list);
+	return (next_line);
 }

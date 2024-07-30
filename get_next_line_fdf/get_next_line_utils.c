@@ -3,80 +3,121 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agaleeva <agaleeva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sliashko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 12:08:29 by agaleeva          #+#    #+#             */
-/*   Updated: 2024/07/25 15:58:07 by agaleeva         ###   ########.fr       */
+/*   Created: 2023/09/14 13:48:58 by sliashko          #+#    #+#             */
+/*   Updated: 2023/09/14 13:48:59 by sliashko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
 
-size_t	ft_strlen(const char *s)
+//This function extracts the last node from linked list
+t_list2	*get_last_node(t_list2 *lst)
+{
+	t_list2	*curr_node;
+
+	if (lst == NULL)
+		return (NULL);
+	curr_node = lst;
+	while (curr_node->next != NULL)
+	{
+		curr_node = curr_node->next;
+	}
+	return (curr_node);
+}
+
+//Goes over content of nodes untill it meets new line
+int	search_for_newline(t_list2 *list)
+{
+	t_list2	*curr_node;
+	char	*curr_content;
+
+	curr_node = list;
+	while (curr_node != NULL)
+	{
+		curr_content = curr_node->content;
+		while (*curr_content != '\0')
+		{
+			if (*curr_content == '\n')
+				return (1);
+			curr_content++;
+		}
+		curr_node = curr_node->next;
+	}
+	return (0);
+}
+
+//Adding new node to the end of linked list
+void	append_node(t_list2 **list, char *buffer_batch)
+{
+	t_list2	*last_node;
+	t_list2	*new_node;
+
+	last_node = get_last_node(*list);
+	new_node = (t_list2 *) malloc(sizeof(t_list2));
+	if (new_node == NULL)
+		return ;
+	if (*list == NULL)
+	{
+		*list = new_node;
+	}
+	else
+		last_node->next = new_node;
+	new_node->content = buffer_batch;
+	new_node->next = NULL;
+}
+
+// Reads chunks untill it faces 1st newline within chunks
+// returns status of reading
+int	create_list(t_list2 **list, int fd)
+{
+	char	*buffer;
+	int		char_read;
+
+	while (search_for_newline(*list) == 0)
+	{
+		buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buffer == NULL)
+			return (-1);
+		char_read = read(fd, buffer, BUFFER_SIZE);
+		if (char_read < 0)
+		{
+			free(buffer);
+			return (-1);
+		}
+		if (char_read == 0)
+		{
+			free(buffer);
+			return (0);
+		}
+		buffer[char_read] = '\0';
+		append_node(list, buffer);
+	}
+	return (1);
+}
+
+//Counts num of chars in content untill first new line 
+//We need this amount for allocating memory
+size_t	len_till_nl(t_list2	*start_node)
 {
 	size_t	len;
+	t_list2	*curr_node;
+	char	*curr_content;
 
 	len = 0;
-	while (s[len])
-		len++;
+	curr_node = start_node;
+	while (curr_node != NULL)
+	{
+		curr_content = curr_node->content;
+		while (*curr_content != '\0')
+		{
+			if (*curr_content == '\n')
+				return (len);
+			curr_content++;
+			len++;
+		}
+		curr_node = curr_node->next;
+	}
 	return (len);
-}
-
-char	*ft_strjoin(const char *s1, const char *s2)
-{
-	char			*res;
-
-	res = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
-	fill_str(res, s1, s2);
-	return (res);
-}
-
-void	fill_str(char *res, const char *s1, const char *s2)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	j = 0;
-	while (s1[j])
-		res[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s != (char)c)
-	{
-		if (!*s)
-			return (NULL);
-		s++;
-	}
-	return ((char *)s);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dest;
-	char	*dest2;
-	size_t	len;
-
-	len = ft_strlen(s);
-	dest = (char *)malloc((len + 1) * sizeof(char));
-	if (dest == NULL)
-		return (NULL);
-	dest2 = dest;
-	while (*s)
-	{
-		*dest = *s;
-		dest++;
-		s++;
-	}
-	*dest = '\0';
-	return (dest2);
 }

@@ -73,6 +73,8 @@ int	main(int argc, char **argv)
 	smooth_scale(map);
 	set_param(map);
 	read_map(map, argv);
+	printf("map height %d\n", map->height);
+	printf("map width %d\n", map->width);
 	calculate_offsets(map, WIN_WIDTH, WIN_HEIGHT);
 	map->mlx = img;
 	draw_map_array(img, map);
@@ -90,7 +92,7 @@ mlx_t	*initialize_mlx(void)
 {
 	mlx_t	*mlx;
 
-	mlx = mlx_init(3840, 2160, "FDF", true);
+	mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "FDF", true);
 	if (!mlx)
 	{
 		ft_printf("Error: Failed to initialize MLX\n");
@@ -103,7 +105,7 @@ mlx_image_t	*initialize_image(mlx_t *mlx)
 {
 	mlx_image_t	*img;
 
-	img = mlx_new_image(mlx, 3840, 2160);
+	img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!img)
 	{
 		mlx_terminate(mlx);

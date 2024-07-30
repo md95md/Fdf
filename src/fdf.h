@@ -13,8 +13,8 @@
 #ifndef FDF_H
 # define FDF_H
 # define EXIT_FAILURE 1
-# define WIN_WIDTH 3600
-# define WIN_HEIGHT 1800
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 # include <stdlib.h>
 # include <math.h>

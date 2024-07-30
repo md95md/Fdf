@@ -37,10 +37,10 @@ void	draw_stars(mlx_image_t *img)
 	int	y;
 
 	y = 0;
-	while (y < 2160)
+	while (y < WIN_HEIGHT)
 	{
 		x = 0;
-		while (x < 3840)
+		while (x < WIN_WIDTH)
 		{
 			mlx_put_pixel(img, x, y, 0x000000FF);
 			// if (rand() % 2000 == 0)

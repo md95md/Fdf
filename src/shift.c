@@ -55,6 +55,6 @@ void	smooth_scale(t_map *map)
 	}
 	else if (map->height < 20 && map->height > 1)
 		map->param.scale = 30.0 + (50.0 - 30.0) * (20 - map->height) / (20 - 1);
-	else
-		map->param.scale = 5.0;
+	else if (map->height < 5)
+		map->param.scale = 10.0;
 }
