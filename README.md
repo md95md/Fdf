@@ -1,1 +1,0 @@
-The code simulates a simplified version of the Unix pipe functionality. It runs a sequence of commands where the output of one command is used as the input for the next command. The program reads input from a file, executes a series of commands, and writes the final output to another file.
