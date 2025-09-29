@@ -82,26 +82,3 @@ void	read_map(t_map *map, char **argv)
 	}
 	close(fd);
 }
-
-// void	read_map(t_map *map, char **argv)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	int		i;
-
-// 	get_map_size(map, argv);
-// 	read_map_help(map, argv);
-// 	fd = open(argv[1], O_RDONLY);
-// 	if (fd == -1)
-// 		free_error_points(map);
-// 	i = 0;
-// 	line = get_next_line(fd);
-// 	while (line != NULL)
-// 	{
-// 		fill_matrix(map->matrix[i], line, i, map);
-// 		free(line);
-// 		i++;
-// 		line = get_next_line(fd);
-// 	}
-// 	close(fd);
-// }
