@@ -76,31 +76,3 @@ void	fill_matrix(t_point *points, char *line, int y, t_map *map)
 	}
 	free(numbers);
 }
-
-/*
-int main(int argc, char **argv)
-{
-    t_map *map;
-
-    if (argc != 2)
-    {
-        printf("Usage: ./fdf <filename>\n");
-        return (1);
-    }
-    map = (t_map *)malloc(sizeof(t_map));
-    if (!map)
-        return (1);
-    read_map(map, argv);
-
-    for (int i = 0; i < map->height; i++)
-    {
-        for (int j = 0; j < map->width; j++)
-        {
-            printf("%3d ", map->matrix[i][j]);
-        }
-        printf("\n");
-    }
-    free_error_points(map);
-    return (0);
-}
-*/
